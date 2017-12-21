@@ -1,0 +1,36 @@
+<html>
+
+    <head>
+        <base href="/">
+        <title>ヘルプデスクデータ問い合わせ</title>
+        <link rel="stylesheet" href="css/style.css">
+ 
+          </head>
+          <body>
+            <ul id="messages"></ul>
+            <div id="scrollingChat"></div>
+            <form action="">
+              <input id="m" autocomplete="off" placeholder="Type something to see the output"/><button></button>
+            </form>  
+
+            <script src="/socket.io/socket.io.js"></script>
+            <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+            <script>
+                $(function () {
+                    var socket = io();
+                    $('form').submit(function(){
+                        socket.emit('chat message', $('#m').val());
+                        $('#m').val('');
+                        return false;
+                    });
+                    socket.on('chat message',function(msg){
+                        $('#messages').append($('<li>').text(msg).addClass('balloon-right').wrap('<div/>'));
+                        });
+                        socket.on('bot message', function(msg){
+                          $('<img class= image/emon.jpg>')
+                          $('#messages').append($('<li>').text('：'+msg).addClass('balloon-left').wrap('<div/>'));
+                        });          
+                      });
+            </script>
+     </head>
+</html>
